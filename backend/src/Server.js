@@ -6,14 +6,20 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 
+//Database
+import { connection } from "./Database/ConnectDB.js";
+
 //Routes
 import movieRoutes from "./Routes/MovieRoutes.js";
+import userRoutes from "./Routes/UserRoutes.js";
 
 const port = process.env.SERVER_PORT || 3000;
 const server = express();
 
+connection();
+
 server.use(express.json());
 server.use(cors());
-server.use(movieRoutes);
+server.use(movieRoutes, userRoutes);
 
 server.listen(port, () => console.log(`Server is running on port ${port}!`));

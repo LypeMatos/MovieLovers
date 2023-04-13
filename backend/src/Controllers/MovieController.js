@@ -1,11 +1,8 @@
-import client from "../Database/ConnectDB.js";
-
-const db = client.db('moviesdb');
-const collection = db.collection('movies');
+import Movie from "../Models/MovieModel.js";
 
 const getAllMovies = async (req, res) => {
     
-    const movies = await collection.find().toArray();
+    const movies = await Movie.find();
 
     if(!movies){
        return res.status(404).json({message: "Nenhum filme encontrado"});
