@@ -1,6 +1,11 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import User from "../Models/UserModel.js";
+
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { emailVerification } from "../Helper/Mail.js";
 
 const registerUser = async (req, res) => {
     const {username, email, password} = req.body;
@@ -19,16 +24,22 @@ const registerUser = async (req, res) => {
         return res.status(422).json({message: "Insira uma senha válida"});
     }
 
-    const salt = 16;
+    const salt = await bcrypt.genSalt(16);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = {
         username, email, password: hashedPassword
     }
 
+    const secret = process.env.JWT_SECRET;
+    //const verifyEmail = await bcrypt.hash("userverifyemail", salt);
+    //const link = `http://localhost:8080/verifyemail/${verifyEmail}`;
+
     try {
         await User.create(newUser);
-        res.status(200).json({message: "Usuário criado com sucesso"});
+        const token = jwt.sign({username}, secret);
+        await emailVerification(email);
+        res.status(200).json({message: "Usuário criado com sucesso", token});
     } catch (error) {
         console.log(error);
         res.status(500).json({message: "Não foi possível atender sua solicitação no momento. Tente novamente mais tarde"});
