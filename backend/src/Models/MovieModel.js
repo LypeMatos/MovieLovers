@@ -3,16 +3,20 @@ import mongoose from "mongoose";
 const movieSchema = new mongoose.Schema({
     name: {
         type: String,
-        unique: true,
+        required: true
     },
     image: {
         type: String
     },
-    actors: {
-        type: String
-    },
     description: {
         type: String
+    },
+    watching: {
+        type: String,
+        enum: ["watched", "watching"]
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId, ref: "users"
     }
 })
 
