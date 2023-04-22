@@ -6,9 +6,9 @@ import mailgun from "mailgun-js";
 const {MAILGUN_KEY, MAILGUN_DOMAIN} = process.env;
 const mg = mailgun({apiKey: MAILGUN_KEY, domain: MAILGUN_DOMAIN});
 
-const verifyLink = "http://localhost:8080/verifyemail"
+//const verifyLink = "http://localhost:8080/verifyemail"
 
-const emailVerification = async (email) => {
+const emailVerification = async (email, link) => {
     await mg.messages().send({
         from: " Felipe <lypematos82@gmail.com>",
 	    to: email,
@@ -16,7 +16,7 @@ const emailVerification = async (email) => {
 	    html: `
             <h1>Olá, Seja Bem-Vindo!</h1>
             <p>Obrigado por se juntar nossa comunidade de amante de filmes! \n
-            Clique neste <a href=${verifyLink}>link</a> para verificar o seu e-mail.
+            Clique neste <a href=${link}>link</a> para verificar o seu e-mail.
             <p>    
         `
     }).catch(error => console.log(error));

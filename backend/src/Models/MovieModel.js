@@ -10,13 +10,6 @@ const movieSchema = new mongoose.Schema({
     },
     description: {
         type: String
-    },
-    watching: {
-        type: String,
-        enum: ["watched", "watching"]
-    },
-    userId: {
-        type: mongoose.Schema.Types.ObjectId, ref: "users"
     }
 })
 
