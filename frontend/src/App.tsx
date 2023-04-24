@@ -1,37 +1,17 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import './App.css';
+//imports
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-interface Movie{
-  _id: string;
-  name: string;
-  image: string;
-  actors: string;
-  description: string;
-}
+//pages
+import Home from './Pages/Home';
 
 function App() {
-  const [movies, setMovies] = useState([]);
-
-  useEffect(() => {
-    async function getAllMovies() {
-      const response = await axios.get("http://localhost:8080");
-      setMovies(response.data.movies);
-    }
-    getAllMovies();
-  }, []);
 
   return (
-    <div className="App">
-      <ul>
-        {movies.map((movie: Movie) => (
-          <div>
-            <h2>{movie.name}</h2>
-            <img src={movie.image} alt={movie.name} />
-          </div>
-        ))}
-      </ul>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+      </Routes>
+    </Router>
   )
 }
 
