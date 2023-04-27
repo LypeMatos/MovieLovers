@@ -18,19 +18,19 @@ const loginUser = async (req, res) => {
     const {email, password} = req.body;
 
     if(!email || !password){
-        return res.status(422).json({message: "Insira o seu e-mail e a senha cadastrada para efetuar o login"});
+        return res.status(400).json({message: "Insira o seu e-mail e a senha cadastrada para efetuar o login"});
     }
 
     const user = await User.findOne({email});
 
     if(!user){
-        return res.status(422).json({message: "Não existe um usuário com este e-mail"});
+        return res.status(401).json({message: "Não existe um usuário com este e-mail"});
     }
 
     const checkPassword = await bcrypt.compare(password, user.password);
 
     if(!checkPassword){
-        return res.status(422).json({message: "Senha inválida"});
+        return res.status(400).json({message: "Senha inválida"});
     }
 
     try {
@@ -118,4 +118,27 @@ const verifyUser = async (req, res) => {
     }
 }
 
-export { loginUser, handleRefreshToken, registerUser, verifyUser };
+const userProfile = async (req, res) => {
+    const authHeader = req.headers.authorization;
+
+    if(!authHeader){
+        return res.status(401).json({message: "Acesso negado"});
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    if(!token){
+        return res.status(401).json({message: "Acesso negado"});
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+        const user = await User.findById(decoded.id);
+        res.status(200).send(user);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Não foi possível atender sua solicitação no momento"});
+    }
+}
+
+export { loginUser, handleRefreshToken, registerUser, verifyUser, userProfile };

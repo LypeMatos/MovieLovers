@@ -19,9 +19,25 @@ const server = express();
 
 connection();
 
+const whitelist = [
+    "http://localhost:5173"
+]
+
+const corsOptions = {
+    origin: (origin, callback) => {
+        if(whitelist.indexOf(origin) !== -1){
+            callback(null, true);
+        }else {
+            callback(new Error("Not Allowed by CORS"));
+        }
+    },
+    optionsSuccessStatus: 200,
+    credentials: true
+}
+
 server.use(express.json());
 server.use(cookieParser());
-server.use(cors());
+server.use(cors(corsOptions));
 server.use(movieRoutes, userRoutes);
 
 server.listen(port, () => console.log(`Server is running on port ${port}!`));

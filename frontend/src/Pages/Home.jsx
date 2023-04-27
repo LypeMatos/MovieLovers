@@ -1,25 +1,23 @@
 //imports
-import axios from "axios";
+import api from "../api/api";
 import { useState, useEffect } from "react";
-
-//types
-import { Movie } from "../Types/MovieTypes";
 
 function Home() {
 
-    const [movies, setMovies] = useState<Movie[] | null>([]);
+    const [movies, setMovies] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8080/").then((response) => {
+        api.get("http://localhost:8080/").then((response) => {
             setMovies(response.data.movies);
         })
     }, [])
 
   return (
     <div>
-        {movies?.map((movie: Movie, index) => (
-            <div key={index}>
+        {movies?.map((movie) => (
+            <div key={movie.title}>
                 <h3>{movie.title}</h3>
+                <img src={movie.image} alt={movie.title} />
             </div>
         ))}
     </div>
