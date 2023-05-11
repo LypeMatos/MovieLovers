@@ -20,7 +20,8 @@ const server = express();
 connection();
 
 const whitelist = [
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "http://localhost:8080"
 ]
 
 const corsOptions = {
@@ -32,7 +33,7 @@ const corsOptions = {
         }
     },
     optionsSuccessStatus: 200,
-    credentials: true
+    credentials: true,
 }
 
 server.use(express.json());

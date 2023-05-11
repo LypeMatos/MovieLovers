@@ -1,8 +1,8 @@
 //imports
 import api from "../api/api";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
+import { AuthContext } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
 
 function Login() {
 
@@ -14,7 +14,7 @@ function Login() {
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
   
-  const { setAuth } = useAuth();
+  const { setAuth } = useContext(AuthContext);
 
   const navigation = useNavigate();
 
@@ -43,6 +43,7 @@ function Login() {
       const accessToken = response?.data?.accessToken;
 
       setAuth({ email, accessToken });
+      console.log(accessToken);
       setSuccess(true);
       navigation("/");
     } catch (error) {

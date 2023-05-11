@@ -1,4 +1,5 @@
 //imports
+import { Link } from "react-router-dom";
 import api from "../api/api";
 import { useState, useEffect } from "react";
 
@@ -7,7 +8,7 @@ function Home() {
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
-        api.get("http://localhost:8080/").then((response) => {
+        api.get("/").then((response) => {
             setMovies(response.data.movies);
         })
     }, [])
@@ -16,7 +17,7 @@ function Home() {
     <div>
         {movies?.map((movie) => (
             <div key={movie.title}>
-                <h3>{movie.title}</h3>
+                <h3><Link to={`/movie/${movie._id}`}>{movie.title}</Link></h3>
                 <img src={movie.image} alt={movie.title} />
             </div>
         ))}

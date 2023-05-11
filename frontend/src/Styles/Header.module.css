@@ -1,0 +1,10 @@
+.container{
+    background-color: aquamarine;
+    max-height: 250px;
+    border-bottom: 2px solid #0c0c0c;
+}
+
+.container h1 {
+    text-align: center;
+    padding: 2rem;
+}

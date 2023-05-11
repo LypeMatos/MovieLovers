@@ -28,8 +28,9 @@ const getMovieById = async (req, res) => {
 
         res.status(200).json({movie});
     } catch (error) {
-        console.log()
+        console.log(error);
+        res.status(500).json({message: "Não foi possível realizar a sua solicitação no momento"})
     }
 }
 
-export {getAllMovies};
+export {getAllMovies, getMovieById};

@@ -1,7 +1,7 @@
 import express from "express";
 
 //Controller
-import { getAllMovies } from "../Controllers/MovieController.js";
+import { getAllMovies, getMovieById } from "../Controllers/MovieController.js";
 
 //utils
 import { verifyToken } from "../utils/VerifyToken.js";
@@ -9,6 +9,6 @@ import { verifyToken } from "../utils/VerifyToken.js";
 const movieRoutes = express.Router();
 
 movieRoutes.get("/", getAllMovies);
-movieRoutes.get("/movie/:id", verifyToken)
+movieRoutes.get("/movie/:id", getMovieById);
 
 export default movieRoutes;
