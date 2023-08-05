@@ -17,10 +17,10 @@ const userSchema = new mongoose.Schema({
         default: false
     },
     watch: [{
-        type: mongoose.Schema.Types.ObjectId, ref: "movies"
+        type: mongoose.Schema.Types.String, ref: "movies"
     }],
     watched: [{
-        type: mongoose.Schema.Types.ObjectId, ref: "movies"
+        type: mongoose.Schema.Types.String, ref: "movies"
     }]
 })
 

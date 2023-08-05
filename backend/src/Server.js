@@ -13,6 +13,7 @@ import { connection } from "./Database/ConnectDB.js";
 //Routes
 import movieRoutes from "./Routes/MovieRoutes.js";
 import userRoutes from "./Routes/UserRoutes.js";
+import commentaryRoutes from "./Routes/CommentaryRoutes.js";
 
 const port = process.env.SERVER_PORT || 3000;
 const server = express();
@@ -38,7 +39,7 @@ const corsOptions = {
 
 server.use(express.json());
 server.use(cookieParser());
-server.use(cors(corsOptions));
-server.use(movieRoutes, userRoutes);
+server.use(cors());
+server.use(movieRoutes, userRoutes, commentaryRoutes);
 
 server.listen(port, () => console.log(`Server is running on port ${port}!`));
