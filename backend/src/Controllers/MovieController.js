@@ -73,7 +73,6 @@ const movieRating = async (req, res) => {
     try {
 
         const userRatedIndex = movie.usersRated.findIndex(user => user._id?.equals(userId));
-        console.log(userRatedIndex);
 
         if(userRatedIndex === -1){
             movie.voteCount++;
@@ -94,4 +93,56 @@ const movieRating = async (req, res) => {
     }
 }
 
-export { getAllMovies, getMovieById, movieLikes, movieRating };
+const watchList = async (req, res) => {
+    const movieId = req.params.id;
+    const userId = req.userId;
+
+    const user = await User.findById(userId);
+
+    if(!user) return res.status(404).json({message: "Usuário não encontrado"});
+
+    try {
+        
+        const movieInWatchlist = user.watchlist.includes(movieId);
+
+        if(!movieInWatchlist){
+            user.watchlist.push(movieId);
+        }else {
+            user.watchlist = user.watchlist.filter(movie => !movie.includes(movieId));
+        }
+
+        await user.save();
+        res.sendStatus(200);
+
+    } catch (error) {        
+        console.log(error);
+        res.status(500).json({message: "Houve um problema"});
+    }
+}
+
+const moviesWatched = async (req, res) => {
+    const movieId = req.params.id;
+    const userId = req.userId;
+
+    const user = await User.findById(userId);
+
+    if(!user) return res.status(404).json({message: "Usuário não encontrado"});
+
+    try {
+        const movieWatched = user.watched.includes(movieId);
+
+        if(!movieWatched){
+            user.watched.push(movieId);
+        }else {
+            user.watched = user.watched.filter(movie => !movie.includes(movieId));
+        }
+
+        await user.save();
+        res.sendStatus(200);        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Houve um problema"});
+    }
+}
+
+export { getAllMovies, getMovieById, movieLikes, movieRating, watchList, moviesWatched };

@@ -49,14 +49,9 @@ const handleRefreshToken = async (req, res) => {
   }
 
   const refreshToken = cookies.jwt;
-  const decodedRefreshToken = jwt.verify(
-    refreshToken,
-    process.env.REFRESH_TOKEN_SECRET
-  );
+  const decodedRefreshToken = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
 
-  const foundUser = await User.findOne({
-    username: decodedRefreshToken.username,
-  });
+  const foundUser = await User.findOne({ username: decodedRefreshToken.username });
 
   if (!foundUser) {
     return res.status(403).json({ message: "no user" });

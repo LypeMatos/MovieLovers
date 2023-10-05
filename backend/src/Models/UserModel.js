@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    watch: [{
+    watchlist: [{
         type: mongoose.Schema.Types.String, ref: "movies"
     }],
     watched: [{

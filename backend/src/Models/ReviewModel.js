@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
-const commentarySchema = new mongoose.Schema({
+const reviewSchema = new mongoose.Schema({
     title: {
         type: String
     },
-    comment: {
+    review: {
         type: String
     },
     user: {
@@ -15,6 +15,6 @@ const commentarySchema = new mongoose.Schema({
     }
 })
 
-const Commentary = mongoose.model("Commentary", commentarySchema);
+const Review = mongoose.model("review", reviewSchema);
 
-export default Commentary;
+export default Review;

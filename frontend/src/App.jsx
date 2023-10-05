@@ -1,32 +1,32 @@
 //imports
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ChakraProvider } from '@chakra-ui/react';
 
 //pages
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
-import Profile from "./Pages/Profile";
 import MovieDetails from "./Pages/MovieDetails";
 
 //provider
-import { AuthProvider } from "./context/AuthProvider";
-import Header from "./components/Header";
+//import { AuthContext } from "./context/AuthProvider";
 
 //components
-
+import Header from "./components/Header";
+//import { useContext } from "react";
 
 function App() {
+
   return (
-    <Router>
-      <AuthProvider>
-        <Header/>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/profile/:id" element={<Profile />} />
-            <Route path="/movie/:id" element={<MovieDetails/>}/>
-          </Routes>
-      </AuthProvider>
-    </Router>
+    <ChakraProvider>
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/movie/:id" element={<MovieDetails />} />
+        </Routes>
+      </Router>
+    </ChakraProvider>
   );
 }
 
